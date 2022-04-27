@@ -9,3 +9,11 @@ telefonos
 Cortex R: destinados a sistemas de tiempo real duro. Es decir deben garantizar el tiempo de lanzamiento de una tarea mediante una cantidad
 de ciclos determinado o menor. 
 Cortex M: Destinado a microcontroladores y dispositivos de consumo masivo, tienen alta densidad de código
+-------------------------------------------------------------------------------------------
+					CORTEX M 
+-------------------------------------------------------------------------------------------
+1)  Describa brevemente las diferencias entre las familias de procesadores Cortex M0, M3 y
+M4.
+rta: Los procesadores cortex M0 poseen bajo consumo y bajo costo. Los procesadores M3 y M4, poseen funcionalidades para DSP. Las instrucciones
+de M0 son de 16 bits y de la familia M3 y M4 pertenes a instrucciones de 32 bits. 
+2) 
