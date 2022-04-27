@@ -1,0 +1,11 @@
+Preguntas orientadoras 
+--------------------------------------
+1) Describa brevemente los diferentes perfiles de familias de
+microprocesadores/microcontroladores de ARM. Explique alguna de sus diferencias
+características.
+rta: Hay tres perfiles que son A, R y M. 
+Los cortex de la familia A están destinados a aplicaciones de propósito general que corren encima de un sistema operativo. Por ejemplo 
+telefonos
+Cortex R: destinados a sistemas de tiempo real duro. Es decir deben garantizar el tiempo de lanzamiento de una tarea mediante una cantidad
+de ciclos determinado o menor. 
+Cortex M: Destinado a microcontroladores y dispositivos de consumo masivo, tienen alta densidad de código
