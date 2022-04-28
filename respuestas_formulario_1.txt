@@ -16,4 +16,12 @@ Cortex M: Destinado a microcontroladores y dispositivos de consumo masivo, tiene
 M4.
 rta: Los procesadores cortex M0 poseen bajo consumo y bajo costo. Los procesadores M3 y M4, poseen funcionalidades para DSP. Las instrucciones
 de M0 son de 16 bits y de la familia M3 y M4 pertenes a instrucciones de 32 bits. 
-2) 
+2) ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
+Explique 
+Porque puede soportar instrucciones de 32/16 bits, lo que resulta en una menor cantidad de instrucciones produciendo una menor densidad 
+de código
+3)¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
+tipo de arquitectura? 
+Los procesadores ARM, no pueden trabajar directamente sobre la memoria. Por ejemplo, para incrementa en uno un valor almacenado en memoria, 
+los pasos debén ser los siguientes en arm: "leer memoria y guardar en registro" - "incrementar el valor de registro en uno" - "volver a cargar
+el valor en memoria" 
