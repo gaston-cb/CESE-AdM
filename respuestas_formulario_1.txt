@@ -9,8 +9,9 @@ Puede procesar muchas cosas al mismo tiempo y el procesamiento es no determinist
 Tiene memoria cache 
 ejemplo un telefono con android.  
 Cortex R: destinados a sistemas de tiempo real duro. Es decir deben garantizar el tiempo de lanzamiento de una tarea mediante una cantidad
-de ciclos determinado o menor. 
+de ciclos determinado o menor. Alta capacidad de procesamiento y baja latencia  
 Cortex M: Destinado a microcontroladores y dispositivos de consumo masivo, tienen alta densidad de código
+	  Tiene bajo consumo. 
 -------------------------------------------------------------------------------------------
 					CORTEX M 
 -------------------------------------------------------------------------------------------
@@ -18,6 +19,8 @@ Cortex M: Destinado a microcontroladores y dispositivos de consumo masivo, tiene
 M4.
 rta: Los procesadores cortex M0 poseen bajo consumo y bajo costo. Los procesadores M3 y M4, poseen funcionalidades para DSP. Las instrucciones
 de M0 son de 16 bits y de la familia M3 y M4 pertenes a instrucciones de 32 bits. 
+El cortex M4 posee hardware para correr un SO real en forma segura
+El cortex M4 posee niveles de ejecución de privilegios(el m0 no tiene)
 2) ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
 Explique 
 Porque puede soportar instrucciones de 32/16 bits, lo que resulta en una menor cantidad de instrucciones produciendo una menor densidad 
