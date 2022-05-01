@@ -21,12 +21,15 @@ rta: Los procesadores cortex M0 poseen bajo consumo y bajo costo. Los procesador
 de M0 son de 16 bits y de la familia M3 y M4 pertenes a instrucciones de 32 bits. 
 El cortex M4 posee hardware para correr un SO real en forma segura
 El cortex M4 posee niveles de ejecución de privilegios(el m0 no tiene)
-2) ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código?
-Explique 
-Porque puede soportar instrucciones de 32/16 bits, lo que resulta en una menor cantidad de instrucciones produciendo una menor densidad 
-de código
+2) ¿Por qué se dice que el set de instrucciones Thumb permite mayor densidad de código? Explique 
+La densidad de código se entiende como la realización de una tareas con un tamaño de programa pequeño. 
+El set de instrucciones de Thumb permite realizar instrucciones de 32/16 bits y el ensamblador es quien decide que tipo de instrucción utilizar. Esto implica
+que para un conjunto de tareas que se deben realizar, hay instrucciones que van a requerir menos instrucciones de codificacion y esto resulta en 
+una mejor densidad de código. 
+
 3)¿Qué entiende por arquitectura load-store? ¿Qué tipo de instrucciones no posee este
 tipo de arquitectura? 
 Los procesadores ARM, no pueden trabajar directamente sobre la memoria. Por ejemplo, para incrementa en uno un valor almacenado en memoria, 
 los pasos debén ser los siguientes en arm: "leer memoria y guardar en registro" - "incrementar el valor de registro en uno" - "volver a cargar
 el valor en memoria" 
+Los operandos son siempre registros del microcontrolador. 
