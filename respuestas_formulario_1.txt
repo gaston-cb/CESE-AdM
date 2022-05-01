@@ -4,8 +4,10 @@ Preguntas orientadoras
 microprocesadores/microcontroladores de ARM. Explique alguna de sus diferencias
 características.
 rta: Hay tres perfiles que son A, R y M. 
-Los cortex de la familia A están destinados a aplicaciones de propósito general que corren encima de un sistema operativo. Por ejemplo 
-telefonos
+Los cortex de la familia A están destinados a aplicaciones de propósito general que corren encima de un sistema operativo. 
+Puede procesar muchas cosas al mismo tiempo y el procesamiento es no determinista. Por 
+Tiene memoria cache 
+ejemplo un telefono con android.  
 Cortex R: destinados a sistemas de tiempo real duro. Es decir deben garantizar el tiempo de lanzamiento de una tarea mediante una cantidad
 de ciclos determinado o menor. 
 Cortex M: Destinado a microcontroladores y dispositivos de consumo masivo, tienen alta densidad de código
