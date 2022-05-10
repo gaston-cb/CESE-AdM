@@ -37,6 +37,9 @@ Los operandos son siempre registros del microcontrolador.
 --------------------------------------------------------------------------------------------
 
 4)¿Cómo es el mapa de memoria de la familia? 
+	El mapa de memoria de la familia llega hasta 4GB, por que tiene un direccionamiento de 32bits. Esta dividido en 
+	stack, periféricos, sram y flash. Además permite el uso de bit-banding, que son regiones de memoria de 8bits mapeadas
+	a un bit de la memoria. Esta acción es repetible por cada zona de memoria. Por ejemplo en la configuración de periféricos
 
 --------------------------------------------------------------------------------------------
 5) ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP?  
