@@ -37,10 +37,9 @@ Los operandos son siempre registros del microcontrolador.
 --------------------------------------------------------------------------------------------
 
 4)¿Cómo es el mapa de memoria de la familia? 
-	El mapa de memoria de la familia llega hasta 4GB, por que tiene un direccionamiento de 32bits. Esta dividido en 
-	stack, periféricos, sram y flash. Además permite el uso de bit-banding, que son regiones de memoria de 8bits mapeadas
-	a un bit de la memoria. Esta acción es repetible por cada zona de memoria. Por ejemplo en la configuración de periféricos
-
+  El mapa de memoria de la familia llega hasta 4GB, por que tiene un direccionamiento de 32bits. Esta dividido en 
+  stack, periféricos, sram y flash. Además permite el uso de bit-banding, que son regiones de memoria de 8bits mapeadas
+  a un bit de la memoria. Esta acción es repetible por cada zona de memoria. Por ejemplo en la configuración de periféricos
 --------------------------------------------------------------------------------------------
 5) ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP?  
 --------------------------------------------------------------------------------------------
@@ -73,6 +72,9 @@ arrival.
 17) Como cambia la operación de stacking al utilizar la unidad de punto flotante 
 --------------------------------------------------------------------------------------------
 18)¿Qué funciones cumple la unidad de protección de memoria (MPU)?
+Es la unidad de protección de memoria y sirve para proteger que ciertas acciones se lleven a cabo en la memoria, protegiendo
+determinadas direcciones. Por ejemplo si el sistema utiliza un SO, no permite que los hilos o procesos escriben en lugares 
+indebidos. Si lo llegan a realizar, entonces ejecuta un error de "segmentation fault" (averiguar que es) 
 --------------------------------------------------------------------------------------------
 19)¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber
 solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las
