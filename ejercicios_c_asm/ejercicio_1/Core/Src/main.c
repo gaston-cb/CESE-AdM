@@ -74,7 +74,7 @@ static void MX_USB_OTG_FS_PCD_Init(void);
  * @param longitud CANTIDAD DE ELEMENTOS (DE 0 A N )
  */
 void zeros (uint32_t *vector,uint32_t longitud){
-	uint32_t index = longitud - 1 ;
+	int64_t index = longitud - 1 ; // verificar si "longitud al restar uno no se "rosquea"
 
 	for (index = longitud - 1; index>=0; index--){
 		vector[index] = 0 ;
