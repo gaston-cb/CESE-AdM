@@ -50,6 +50,11 @@ Los operandos son siempre registros del microcontrolador.
 7) ¿Que se entiende por modelo de registros ortogonal? 
 --------------------------------------------------------------------------------------------
 8) ¿Qué ventajas presenta el uso de instrucciones de ejecución condicional (IT)?Dé un ejemplo 
+   El uso de instrucciones de ejecución condicional evita la ejecución de una instrucción al darse una determinada 
+   condición, porque la instrucción se ejecuta en caso de que la comparación sea cierta. Por ej: 
+	ADDNE R0,RO,R1 -> R0 = RO + R1 
+   Si la operación de R0+R1 no es cero, entonces realiza la suma y la guarda en R0. En caso
+   de ser cero, entonces no ejecuta la instrucción ADD, y actualiza los flag de estados
 --------------------------------------------------------------------------------------------
 9) Describa brevemente las excepciones más prioritarias 
 --------------------------------------------------------------------------------------------
