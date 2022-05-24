@@ -62,6 +62,11 @@ Los operandos son siempre registros del microcontrolador.
 13) ¿Como se implementan las prioridades de las interrupciones ? 
 --------------------------------------------------------------------------------------------
 14) ¿Qué es el CMSIS? 
+    Es una interfaz de programación definida por ARM, donde se definen las ISR de sistema, siendo estas de la 0 a la 15, y el resto de 
+    interrupciones se las deja al fabricante. Esta interfaz logra compatibilidad en las operaciones del sistema. Las ISR de la 16 a la 255
+    las deja a criterio del fabricante. 
+    Al definir las ISR de la 0 a la 15, permite compatibilidad de código a las llamadas del sistema, donde de la 16 a las 255 si se 
+    utilizan periféricos del microcontrolador se deben reprogramar o ver cual es la forma de migrarlos. 
 --------------------------------------------------------------------------------------------
 15) Cuando ocurre una interrupcion, asumiendo que está habilitada ¿Cómo opera el microprocesador para atender la subrutina 
 	correspondiente? 
@@ -108,4 +113,4 @@ ejemplo con operaciones con datos de 8 bits.
 	pila antes de ser modificados? 
 -------------------------------------------------------------------------------------------
  5)¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un
-ejemplo.
+ejemplo. 
