@@ -68,11 +68,11 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void productoEscalar16(uint16_t * vectorIn, uint16_t * vectorOut,uint32_t longitud, uint16_t escalar){
-	uint32_t index ;
+	int64_t index ;
 	uint32_t result_op ;
 	for (index = longitud-1 ; index>=0 ; index--){
 		result_op =vectorIn[index]*escalar ;
-		vectorOut[index] = (result_op >(uint16_t)UINT16_MAX)?UINT32_MAX:(uint32_t)result_op ;
+		vectorOut[index] = (result_op < vectorIn[index]||result_op<escalar )?UINT16_MAX:(uint16_t)result_op ;
 	}
 }
 /* USER CODE END 0 */

@@ -32,6 +32,7 @@
 
 /* Private define ------------------------------------------------------------*/
 /* USER CODE BEGIN PD */
+
 /* USER CODE END PD */
 
 /* Private macro -------------------------------------------------------------*/
@@ -68,14 +69,14 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void productoEscalar32(uint32_t * vectorIn, uint32_t * vectorOut,uint32_t longitud, uint32_t escalar){
-	uint32_t index ;
+	int64_t index ;
 	uint64_t result_op ;
-	for (index = longitud-1 ; index>=0 ; index--){
-		result_op =vectorIn[index]*escalar ;
-		vectorOut[index] = (result_op >(uint64_t)UINT32_MAX)?UINT32_MAX:(uint32_t)result_op ;
+	// cuidado al contar para atras con una variable uint!
+	for (index = (longitud-1) ; index>=0 ; index--){
+		result_op = vectorIn[index] * escalar ;
+		vectorOut[index] = (result_op< vectorIn[index] || result_op< escalar)?UINT32_MAX:(uint32_t)result_op ;
 
 	}
-	UINT16_MAX ;
 }
 /* USER CODE END 0 */
 
@@ -86,7 +87,7 @@ void productoEscalar32(uint32_t * vectorIn, uint32_t * vectorOut,uint32_t longit
 int main(void)
 {
   /* USER CODE BEGIN 1 */
- uint32_t vIN[3]= {0xFFFFffffUL,1,25 } ;
+ uint32_t vIN[3] ={0xFFFFFFFFUL,1,25};
  uint32_t escalar = 25 ;
  uint32_t vOut[3]  ;
  /* USER CODE END 1 */
