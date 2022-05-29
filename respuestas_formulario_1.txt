@@ -135,7 +135,9 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
 16) Explique las características avanzadas de atención a interrupciones: tail chaining y late
 arrival.
     Tail chaining: Cuando una interrupción se esta ejecutando, y ingresa otra interrupción de mayor o igual prioridad, esta segunda
-    se pone en modo de espera, y al finalizar la primera interrupción comienza inmediatamente con la segunda interrupción. 
+    se pone en modo de espera, y al finalizar la primera interrupción comienza inmediatamente con la segunda interrupción. Esto reduce el tiempo 
+    de atención de las interrupciones. 
+    Late Arrival: Durante la operación de stacking de una isr, llega otra de mayor prioridad, entonces se atiende primero a esta de mayor prioridad. 
 --------------------------------------------------------------------------------------------
 17) Como cambia la operación de stacking al utilizar la unidad de punto flotante 
     Un bloque de datos es guardado en memoria cada vez que ocurre una excepción, este bloque se denomina stack frame. Si el procesador no
@@ -158,19 +160,39 @@ indebidos. Si lo llegan a realizar, entonces ejecuta un error de "segmentation f
 20)¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber
 solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las
 regiones definidas?
-  La MPU puede definir hasta 8 regiones programables 
+  La MPU puede definir hasta 8 regiones programables. Si se accede a una zona de memoria no permitida, entonces ocurre una excepción de fault
+  (HardFault o MemManage) 
+  Si hay regiones superpuestas, entonces el permiso se basará en la región con el numero mas alto(yiu y el siguiente enlace: https://www.st.com/resource/en/application_note/dm00272912-managing-memory-protection-unit-in-stm32-mcus-stmicroelectronics.pdf)  
 --------------------------------------------------------------------------------------------
 21) ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto
 de las excepciones? Dé un ejemplo
+  PendSV es una excepción pendiente. Si se lo configura con la prioridad mas baja, si se activan varias excepciones al mismo tiempo, la última
+  será la ISR de pendSV. Al tener esta carácteristica los sistemas operativos pueden utilizarlo para realizar en forma segura el cambio 
+  de contexto entre las tareas. 
+
 --------------------------------------------------------------------------------------------
 22) ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un
 sistema operativo embebido.
+  SVC es una interrupción que es generada a través de codigo SVC. SVC puede ejecutar código inmediatamente, siempre que no llegue una ISR
+  de mayor prioridad. En muchos sistemas es utilizado para acceder a los recursos de hardware que posee el sistema operativo, manejado desde
+  una API, que se comunica con el kernel del mismo. SVC_handler y SVC estan estandarizados en CMSIS.  
+
+
 -------------------------------------------------------------------------------------------
 					ISA 
 -------------------------------------------------------------------------------------------
  1) ¿Qué son los sufijos y para qué se los utiliza? Dé un ejemplo
+    Los sufijos pueden actualizar los flags de estado (N,Q,V,etc) o  realizar instrucciones condicionales en base a una condicion
+    ejemplo: ADDNE RO,R1 ; RO= R1 + R0 si el flag z = 0. 
+    Si el flag es z = 1, entonces ADD no se ejecuta. Si el flag z= 0, entonces r0 = r0 + r1 es actualizado
 -------------------------------------------------------------------------------------------
  2) ¿Para qué se utiliza el sufijo ‘s’? Dé un ejemplo
+    Se utiliza para actualizar el registro APSR. Por ejemplo 
+    MOVS r0,r1 ; mueve r1 a r0 y actualiza APSR. 
+    MOV r0,r1 ; mueve r1 a r0 y NO  actualiza APSR. 
+  
+
+
 -------------------------------------------------------------------------------------------
  3) ¿Qué utilidad tiene la implementación de instrucciones de aritmética saturada? Dé un
 ejemplo con operaciones con datos de 8 bits.
