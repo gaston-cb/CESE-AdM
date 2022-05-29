@@ -78,6 +78,9 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
 
 --------------------------------------------------------------------------------------------
 13) ¿Como se implementan las prioridades de las interrupciones ? 
+    Se implementan a través del core peripheral denominado NVIC (Nested Vector Interrupt Controller) y las prioridades de las interrupciones pueden cambiar 
+    en tiempo de ejecución. Además hay funciones de enmascaramiento que permiten enmascarar ISR y excepciones(NMI no aplica) por debajo de 
+    cierto nivel de prioridad. Estas prioridades en NVIC puede usarse a través de la interfaz de CMSIS-core. El número de ISR viene determinado por el fabricante 
 --------------------------------------------------------------------------------------------
 14) ¿Qué es el CMSIS? ¿Qué función cumple?¿ Quién lo provee?¿Que ventajas aporta?
     CMSIS fue desarrollado por ARM para permitir que los proveedores de microcontroladores usen una infraestructura de software para 
