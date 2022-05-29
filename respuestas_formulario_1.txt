@@ -72,7 +72,13 @@ Los operandos son siempre registros del microcontrolador.
 --------------------------------------------------------------------------------------------
 13) ¿Como se implementan las prioridades de las interrupciones ? 
 --------------------------------------------------------------------------------------------
-14) ¿Qué es el CMSIS? 
+14) ¿Qué es el CMSIS? ¿Qué función cumple?¿ Quién lo provee?¿Que ventajas aporta?
+    CMSIS fue desarrollado por ARM para permitir que los proveedores de microcontroladores usen una infraestructura de software para 
+    microcontroladores cortex-M que sea consistente. De hecho, hay microcontroladores "CMSIS-compliant" 
+    Como el software cada vez es más complejo, y viene de diferentes partes, ARM con el fin de facilitar el desarrollo y la interoperabilidad 
+    ARM trabajó con proveedores de soluciones de software para el desarrollo de CMSIS, que es un framework que cubre la mayoria de los casos  
+    de microcontroladores cortex M. La ventaja principal es la portabilidad y reutilización de código porque CMSIS es un estandar, donde solo 
+    se debe cambiar la capa de acceso a los periféricos (en caso que se utilicen). Además CMSIS provee acceso adicional a donde C no puede acceder[yiu pag 49 - 2º párrafo].
     Es una interfaz de programación definida por ARM, donde se definen las ISR de sistema, siendo estas de la 0 a la 15, y el resto de 
     interrupciones se las deja al fabricante. Esta interfaz logra compatibilidad en las operaciones del sistema. Las ISR de la 16 a la 255
     las deja a criterio del fabricante. 
