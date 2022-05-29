@@ -69,11 +69,11 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void productoEscalar12(uint16_t * vectorIn, uint16_t * vectorOut,uint32_t longitud, uint16_t escalar){
-	uint64_t index ;
-	uint16_t result_op ;
+	int64_t index ;
+	uint32_t result_op ;
 	for (index = longitud-1 ; index>=0 ; index--){
 		result_op =vectorIn[index]*escalar ;
-		vectorOut[index] = (result_op >(uint16_t)UINT12_MAX||result_op<vectorIn[index]||result_op < escalar)?UINT12_MAX:(uint16_t)result_op ;
+		vectorOut[index] = (result_op >(uint16_t)UINT12_MAX || result_op<vectorIn[index] || result_op < escalar)?UINT12_MAX:(uint16_t)result_op ;
 	}
 }
 /* USER CODE END 0 */
@@ -355,8 +355,7 @@ void Error_Handler(void)
   }
   /* USER CODE END Error_Handler_Debug */
 }
-
-#ifdef  USE_FULL_ASSERT
++#ifdef  USE_FULL_ASSERT
 /**
   * @brief  Reports the name of the source file and the source line number
   *         where the assert_param error has occurred.
