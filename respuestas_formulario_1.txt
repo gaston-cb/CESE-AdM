@@ -103,7 +103,9 @@ arrival.
 --------------------------------------------------------------------------------------------
 17) Como cambia la operación de stacking al utilizar la unidad de punto flotante 
 --------------------------------------------------------------------------------------------
-18)¿Qué funciones cumple la unidad de protección de memoria (MPU)?
+18) ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
+--------------------------------------------------------------------------------------------
+19)¿Qué funciones cumple la unidad de protección de memoria (MPU)?
 Es un dispositivo que monitorea las transacciones del bus y necesita que se configure por software. Las aplicaciones
 pueden dividir el espacio de memoria y definir permisos de acceso para cada uno de ellos. Al violarse una de estas 
 reglas, se genera una excepción de falla y se podrá analizar el problema para corregirlo. 
@@ -111,14 +113,14 @@ Es la unidad de protección de memoria y sirve para proteger que ciertas accione
 determinadas direcciones. Por ejemplo si el sistema utiliza un SO, no permite que los hilos o procesos escriben en lugares 
 indebidos. Si lo llegan a realizar, entonces ejecuta un error de "segmentation fault" (averiguar que es) 
 --------------------------------------------------------------------------------------------
-19)¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber
+20)¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber
 solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las
 regiones definidas?
 --------------------------------------------------------------------------------------------
-20) ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto
+21) ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto
 de las excepciones? Dé un ejemplo
 --------------------------------------------------------------------------------------------
-21) ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un
+22) ¿Para qué se suele utilizar la excepción SVC? Expliquelo dentro de un marco de un
 sistema operativo embebido.
 -------------------------------------------------------------------------------------------
 					ISA 
