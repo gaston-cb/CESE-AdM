@@ -45,18 +45,26 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
 4)¿Cómo es el mapa de memoria de la familia? 
   El mapa de memoria de la familia llega hasta 4GB, por que tiene un direccionamiento de 32bits. Esta dividido en 
   stack, periféricos, sram y flash. Además permite el uso de bit-banding, que son regiones de memoria de 8bits mapeadas
-  a un bit de la memoria. Esta acción es repetible por cada zona de memoria. Por ejemplo en la configuración de periféricos
+  a un bit de la memoria. Esta acción es repetible por cada zona de memoria. Por ejemplo en la configuración de periféricos. 
+  Cada mapa de memoria es flexible y viene dado por el fabricante del microcontrolador. 
 --------------------------------------------------------------------------------------------
-5) ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP?  
+5) ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP? 
+   Fisicamente hay dos stack pointers diferentes: MSP (main stack pointer), es el que se selecciona luego del reset o cuando el procesador
+   esta en modo handler(atendiendo una interrupción/excepción). El otor stack pointer se llama PSP (process stack pointer), y solo 
+   se usa en modo thread. Esta selección la realiza un registro llamado "CONTROL". El PSP generalmente se usa para el uso de un SO 
+   ya que la pila del SO y de las aplicaciones estan separadas.  El valor inicial de PSP no está definido y el valor inicial de MSP se toma
+   de la primera palabra de la memoria durante la secuencia de reinicio.  
    Una ventaja es separar el uso del kernel e ISR respecto de las tareas. 
 --------------------------------------------------------------------------------------------
 6) Describa diferentes modos de privilegio y operación del cortex M, sus relaciones y como se conmuta 
    de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no privilegiado y nuevamente a 
    privilegiado
    Modo no privilegiado: Posee restricciones sobre lo que puede realizar o no. Esto generalmente es manejado por el sistema MPU. 
- 	
-   Modo privilegiado(por default): 
-
+   Modo privilegiado(por default): Posee acceso a todos los recursos del procesador  
+   Mediante mecanismos de software se puede pasar de modo privilegiado a no privilegiado, pero no al revés. Si se desea pasar de 
+   modo no privilegiado a privilegiado el único mecanismo disponible es utilizar una excepción y dentro de la excepción cambiar el 
+   modo a privilegiado. 
+   Ambos modos son similares, solamente que el modo privilegiado puede acceder completamente al NVIC. 
 --------------------------------------------------------------------------------------------
 7) ¿Que se entiende por modelo de registros ortogonal? 
    Se entiende que todos los registros son de propósito general. 
@@ -68,11 +76,19 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
    Si la operación de R0+R1 no es cero, entonces realiza la suma y la guarda en R0. En caso
    de ser cero, entonces no ejecuta la instrucción ADD, y actualiza los flag de estados
 --------------------------------------------------------------------------------------------
-9) Describa brevemente las excepciones más prioritarias 
+9) Describa brevemente las excepciones más prioritarias (reset, NMI, HardFault)  
 --------------------------------------------------------------------------------------------
 10) Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno? 
+    La pila es un lugar de almacenamiento para datos. En el caso del cortex-M, es una memoria tipo LIFO. El valor del 
+    puntero a memoria (r13, stack pointer) es incrementado/decrementado usando push y pop. El modelo del memoria stack
+    en los cortex M se denomina "full-descending-stack". Al iniciarse se ubica al final del espacio de memoria y con cada 
+    operación incrementa/decrementa el registro r13(stack pointer).  El intercambio se realiza guardando los valores de los registros usando push al inicio
+    y con pop para recuperarlos. 
+    El valor de retorno lo resuelve a partir del valor de r14 que es el "LINK-REGISTERS". Este valor es actualizado para realizar 
+    el salto a la vuelta de la función (con la programaciòn en ASM se podra responder si esto es cierto, hay que cambiarlo).
 --------------------------------------------------------------------------------------------
 11) Describa la secuencia de reset del microcontrolador 
+    Luego del reset: CONTROL = 0 
 --------------------------------------------------------------------------------------------
 12) ¿Que entiende por "core peripherals"?¿Qué diferencia existe entre estos y el resto de los periféricos? 
     Se entiende que son periféricos propios de la arquitectura de cortex, y son comunes a todos los cortex. Estos son NVIC, MPU, systick timer
@@ -101,7 +117,14 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
     utilizan periféricos del microcontrolador se deben reprogramar o ver cual es la forma de migrarlos. 
 --------------------------------------------------------------------------------------------
 15) Cuando ocurre una interrupcion, asumiendo que está habilitada ¿Cómo opera el microprocesador para atender la subrutina 
-	correspondiente? 
+    correspondiente? 
+    Las interrupciones cambian el flujo normal del programa y luego de realizar las acciones correspondientes vuelve al flujo normal 
+    del programa. Cuando el flujo de programa ocurre una interrupción, el procesador realiza el guardado de registros correspondientes
+    dento del stack. Esta operación se denomina "stacking"(yiu). Luego de ejecutarse la rutina de interrupción vuelve al estado desde 
+    donde partió, volviendo los registros a los valores anteriores, antes que se llamará la interrupción. Esta operación se denomina 
+    "unstacking".  
+    Las ISR las maneja NVIC y NMI. Usualmente IRQ son generadas por periféricos internos/externos. NMI lo utiliza el watchdog y el brown-out detector
+    (el brown-out es el que avisa de caidas de tensión en la linea de VCC del microcontrolador). 
 --------------------------------------------------------------------------------------------
 16) Explique las características avanzadas de atención a interrupciones: tail chaining y late
 arrival.
@@ -124,6 +147,7 @@ indebidos. Si lo llegan a realizar, entonces ejecuta un error de "segmentation f
 20)¿Cuántas regiones pueden configurarse como máximo? ¿Qué ocurre en caso de haber
 solapamientos de las regiones? ¿Qué ocurre con las zonas de memoria no cubiertas por las
 regiones definidas?
+  La MPU puede definir hasta 8 regiones programables 
 --------------------------------------------------------------------------------------------
 21) ¿Para qué se suele utilizar la excepción PendSV? ¿Cómo se relaciona su uso con el resto
 de las excepciones? Dé un ejemplo
