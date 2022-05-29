@@ -38,7 +38,8 @@ tipo de arquitectura?
 Los procesadores ARM, no pueden trabajar directamente sobre la memoria. Por ejemplo, para incrementa en uno un valor almacenado en memoria, 
 los pasos debén ser los siguientes en arm: "leer memoria y guardar en registro" - "incrementar el valor de registro en uno" - "volver a cargar
 el valor en memoria" 
-Los operandos son siempre registros del microcontrolador. 
+Los operandos son siempre registros del microcontrolador. En cualquier caso de operación sobre la memoria, primero se debe realizar la carga del 
+valor en un registro del procesador. Esto significa que la arquitectura es "load-store". Los detalles de los registros se conocen como "programmer's model". 
 --------------------------------------------------------------------------------------------
 
 4)¿Cómo es el mapa de memoria de la familia? 
@@ -69,6 +70,12 @@ Los operandos son siempre registros del microcontrolador.
 11) Describa la secuencia de reset del microcontrolador 
 --------------------------------------------------------------------------------------------
 12) ¿Que entiende por "core peripherals"?¿Qué diferencia existe entre estos y el resto de los periféricos? 
+    Se entiende que son periféricos propios de la arquitectura de cortex, y son comunes a todos los cortex. Estos son NVIC, MPU, systick timer
+    y varios registros programables SBC. El resto de perifericos los define el fabricante. En el caso del cortex M3, se encontró la siguiente
+    referencia por "core peripheral": 
+    https://developer.arm.com/documentation/dui0552/a/introduction/about-the-cortex-m3-processor-and-core-peripherals/cortex-m3-core-peripherals
+
+
 --------------------------------------------------------------------------------------------
 13) ¿Como se implementan las prioridades de las interrupciones ? 
 --------------------------------------------------------------------------------------------
@@ -94,6 +101,9 @@ arrival.
 17) Como cambia la operación de stacking al utilizar la unidad de punto flotante 
 --------------------------------------------------------------------------------------------
 18)¿Qué funciones cumple la unidad de protección de memoria (MPU)?
+Es un dispositivo que monitorea las transacciones del bus y necesita que se configure por software. Las aplicaciones
+pueden dividir el espacio de memoria y definir permisos de acceso para cada uno de ellos. Al violarse una de estas 
+reglas, se genera una excepción de falla y se podrá analizar el problema para corregirlo. 
 Es la unidad de protección de memoria y sirve para proteger que ciertas acciones se lleven a cabo en la memoria, protegiendo
 determinadas direcciones. Por ejemplo si el sistema utiliza un SO, no permite que los hilos o procesos escriben en lugares 
 indebidos. Si lo llegan a realizar, entonces ejecuta un error de "segmentation fault" (averiguar que es) 
