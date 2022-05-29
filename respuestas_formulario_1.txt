@@ -48,10 +48,15 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
   a un bit de la memoria. Esta acción es repetible por cada zona de memoria. Por ejemplo en la configuración de periféricos
 --------------------------------------------------------------------------------------------
 5) ¿Qué ventajas presenta el uso de los "shadowed pointers" del PSP y el MSP?  
+   Una ventaja es separar el uso del kernel e ISR respecto de las tareas. 
 --------------------------------------------------------------------------------------------
 6) Describa diferentes modos de privilegio y operación del cortex M, sus relaciones y como se conmuta 
    de uno al otro. Describa un ejemplo en el que se pasa del modo privilegiado a no privilegiado y nuevamente a 
    privilegiado
+   Modo no privilegiado: Posee restricciones sobre lo que puede realizar o no. Esto generalmente es manejado por el sistema MPU. 
+ 	
+   Modo privilegiado(por default): 
+
 --------------------------------------------------------------------------------------------
 7) ¿Que se entiende por modelo de registros ortogonal? 
    Se entiende que todos los registros son de propósito general. 
@@ -151,4 +156,5 @@ ejemplo con operaciones con datos de 8 bits.
 -------------------------------------------------------------------------------------------
  5)¿Qué es una instrucción SIMD? ¿En qué se aplican y que ventajas reporta su uso? Dé un
 ejemplo. 
-Es una instrucción que realiza multiples pasos en uno solo. 
+Es una instrucción que realiza multiples operaciones de datos en paralelo. Por ejemplo el audio, donde el procesamiento del canal izquierdo
+ocurre simultaneamente al derecho.  
