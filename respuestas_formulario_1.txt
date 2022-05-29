@@ -77,7 +77,10 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
    de ser cero, entonces no ejecuta la instrucción ADD, y actualiza los flag de estados
 --------------------------------------------------------------------------------------------
 9) Describa brevemente las excepciones más prioritarias (reset, NMI, HardFault) 
+    Reset es un tipo especial de excepción. Cuando existe un reset, el procesador ejecuta reset en modo thread. 
     NMI lo utiliza el watchdog y el brown-out detector (el brown-out es el que avisa de caidas de tensión en la linea de VCC del microcontrolador). 
+    Cuando el procesador detecta una instrucción indefinida, un error de respuesta en el acceso a memoria, o error en el bus de comunicación, esto 
+    habilita el evento de HardFault y es una excecpción siempre habilitada. 
 --------------------------------------------------------------------------------------------
 10) Describa las funciones principales de la pila. ¿Cómo resuelve la arquitectura el llamado a funciones y su retorno? 
     La pila es un lugar de almacenamiento para datos. En el caso del cortex-M, es una memoria tipo LIFO. El valor del 
@@ -88,8 +91,11 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
     El valor de retorno lo resuelve a partir del valor de r14 que es el "LINK-REGISTERS". Este valor es actualizado para realizar 
     el salto a la vuelta de la función (con la programaciòn en ASM se podra responder si esto es cierto, hay que cambiarlo).
 --------------------------------------------------------------------------------------------
-11) Describa la secuencia de reset del microcontrolador 
-    Luego del reset: CONTROL = 0 
+11) Describa la secuencia de reset del microcontrolador   
+    Hay tres tipos de reset: Power On Reset , System reset, Processor reset. 
+    Luego del reset, el proceseador lee dos palabras de la memoria. El comienzo del espacio de memoria contiene la tabla de vectores, y los 
+    primeros dos valores es el valor inicial del Main Stack Pointer, el vector de reset de donde debe iniciar el manejador de la excecpción de
+    reset. Luego de estas dos primeras palabras, el procesador carga MSP y el program Counter. 
 --------------------------------------------------------------------------------------------
 12) ¿Que entiende por "core peripherals"?¿Qué diferencia existe entre estos y el resto de los periféricos? 
     Se entiende que son periféricos propios de la arquitectura de cortex, y son comunes a todos los cortex. Estos son NVIC, MPU, systick timer
@@ -128,8 +134,13 @@ valor en un registro del procesador. Esto significa que la arquitectura es "load
 --------------------------------------------------------------------------------------------
 16) Explique las características avanzadas de atención a interrupciones: tail chaining y late
 arrival.
+    Tail chaining: Cuando una interrupción se esta ejecutando, y ingresa otra interrupción de mayor o igual prioridad, esta segunda
+    se pone en modo de espera, y al finalizar la primera interrupción comienza inmediatamente con la segunda interrupción. 
 --------------------------------------------------------------------------------------------
 17) Como cambia la operación de stacking al utilizar la unidad de punto flotante 
+    Un bloque de datos es guardado en memoria cada vez que ocurre una excepción, este bloque se denomina stack frame. Si el procesador no
+    tiene unidad de punto flotante, el stack frame es siempre de ocho palabras. Para cortex M4 con unidad de punto flotante, el frame va de 8 
+    o 26 palabras. 
 --------------------------------------------------------------------------------------------
 18) ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
 Es un contador de tiempo que poseen todos los cortex M3 y M4, que se puede configurar para que genere ISR de forma periódica. Si un 
