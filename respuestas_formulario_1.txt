@@ -104,6 +104,9 @@ arrival.
 17) Como cambia la operación de stacking al utilizar la unidad de punto flotante 
 --------------------------------------------------------------------------------------------
 18) ¿Qué es el systick? ¿Por qué puede afirmarse que su implementación favorece la portabilidad de los sistemas operativos embebidos?
+Es un contador de tiempo que poseen todos los cortex M3 y M4, que se puede configurar para que genere ISR de forma periódica. Si un 
+SO utiliza este periférico, es completamente portable, porque pertenece al core de la arquitectura y no a los periféricos definidos por
+el fabricante. 
 --------------------------------------------------------------------------------------------
 19)¿Qué funciones cumple la unidad de protección de memoria (MPU)?
 Es un dispositivo que monitorea las transacciones del bus y necesita que se configure por software. Las aplicaciones
