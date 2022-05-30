@@ -5,7 +5,7 @@
 @ Simbolos exportados
 .global asm_svc
 .global asm_sum
-
+.global asm_zeros
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
@@ -42,4 +42,13 @@
         @ mov pc,lr
         @ bx lr
         @ push {lr} ... pop {pc}
-
+.thumb_func
+    asm_zeros:
+        @ Registros usados
+        @   r2: valor cero
+        mov r2, 0           @ constante cero
+    .asm_zeros_loop:
+        str r2, [r0], 4     @ sizeof(uint32_t) == 4, *vector++ = r2
+        subs r1, 1          @ --longitud
+        bne .asm_zeros_loop
+        bx lr

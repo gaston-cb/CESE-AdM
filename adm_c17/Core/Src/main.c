@@ -23,6 +23,8 @@
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
 #include "asm_func.h"
+#include "ejercicios.h"
+
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -156,7 +158,10 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
   PrivilegiosSVC ();
-
+  uint32_t vector_test[3] = { 15,20,21} ;
+  zeros(vector_test,3 ) ;
+  //asm("nop") ;
+  asm_zeros(vector_test, 3) ;
   const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
 
