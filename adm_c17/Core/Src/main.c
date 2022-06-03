@@ -125,6 +125,9 @@ static void PrivilegiosSVC (void)
 }
 /* USER CODE END 0 */
 
+
+
+
 /**
   * @brief  The application entry point.
   * @retval int
@@ -158,13 +161,21 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
   PrivilegiosSVC ();
-  uint32_t vector_test[3] = { 15,20,21} ;
-  zeros(vector_test,3 ) ;
-  //asm("nop") ;
-  asm_zeros(vector_test, 3) ;
-  const uint32_t Resultado = asm_sum (5, 3);
-  /* USER CODE END 2 */
+  uint32_t escalar_test = 45 ;
+  uint32_t vector_test_asm[3] = {0xFFFFFFFFul,20,21} ;
 
+  uint32_t vector_test_code_c[3] = {15,20,21} ;
+  uint32_t vector_out_test_code_c[3] ;
+  uint32_t vector_out_test_asm[3] ;
+  //zeros(vector_test_code_c,3 ) ;
+  //asm_zeros(vector_test_asm, 3) ;
+
+
+
+   const uint32_t Resultado = asm_sum (5, 3);
+  /* USER CODE END 2 */
+   productoEscalar32(vector_test_code_c, vector_out_test_code_c, 3, escalar_test) ;
+   asm_productoEscalar32(vector_test_asm, vector_out_test_asm, 3, escalar_test) ;
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)

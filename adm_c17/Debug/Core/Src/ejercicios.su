@@ -1,4 +1,4 @@
-../Core/Src/ejercicios.c:10:6:productoEscalar32	80	static
-../Core/Src/ejercicios.c:23:6:productoEscalar16	56	static
-../Core/Src/ejercicios.c:32:6:productoEscalar12	56	static
-../Core/Src/ejercicios.c:42:6:zeros	40	static
+..\Core\Src\ejercicios.c:10:6:productoEscalar32	56	static
+..\Core\Src\ejercicios.c:23:6:productoEscalar16	56	static
+..\Core\Src\ejercicios.c:32:6:productoEscalar12	56	static
+..\Core\Src\ejercicios.c:42:6:zeros	40	static

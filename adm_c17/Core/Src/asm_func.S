@@ -6,7 +6,7 @@
 .global asm_svc
 .global asm_sum
 .global asm_zeros
-
+.global asm_productoEscalar32
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
 @   void asm_svc (void)
@@ -52,3 +52,21 @@
         subs r1, 1          @ --longitud
         bne .asm_zeros_loop
         bx lr
+
+
+@ ro = vector_in, r1:vector_out ; r2 = longitud , r3 = escalar ;
+.thumb_func
+	asm_productoEscalar32:
+@	push {r5}
+	.asm_productoEscalar32_loop:
+	ldr r5,[r0],#4
+	muls r5,r3
+	str r5,[r1],#4
+	subs r2,1
+	bne .asm_productoEscalar32_loop
+@	pop {r5}
+	bx lr @; devuelve el contexto de ejecución
+@
+
+
+

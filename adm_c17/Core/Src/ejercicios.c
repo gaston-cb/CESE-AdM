@@ -9,13 +9,13 @@
 
 void productoEscalar32(uint32_t * vectorIn, uint32_t * vectorOut,uint32_t longitud, uint32_t escalar){
 	int64_t index ;
-	uint64_t result_op ;
-	// cuidado al contar para atras con una variable uint!
+	uint32_t result_op ;
+	// cuidado al contar para atras con  variable uint!
 	for (index = (longitud-1) ; index>=0 ; index--){
 		result_op = vectorIn[index] * escalar ;
 		vectorOut[index] = (result_op< vectorIn[index] || result_op< escalar)?UINT32_MAX:(uint32_t)result_op ;
-
 	}
+
 }
 
 
