@@ -1,0 +1,4 @@
+../Core/Src/ejercicios.c:10:6:productoEscalar32	12	static
+../Core/Src/ejercicios.c:23:6:productoEscalar16	20	static
+../Core/Src/ejercicios.c:33:6:productoEscalar12	12	static
+../Core/Src/ejercicios.c:43:6:zeros	0	static

@@ -7,6 +7,7 @@
 .global asm_sum
 .global asm_zeros
 .global asm_productoEscalar32
+.global asm_productoEscalar16
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
 @   void asm_svc (void)
@@ -57,16 +58,39 @@
 @ ro = vector_in, r1:vector_out ; r2 = longitud , r3 = escalar ;
 .thumb_func
 	asm_productoEscalar32:
-@	push {r5}
+	push {r5}
 	.asm_productoEscalar32_loop:
-	ldr r5,[r0],#4
-	muls r5,r3
+	ldr r5,[r0],#4 	@r5 -> contenido apuntado por ro en r5, y luego r0 = r0+4
+	mul r5,r3		@ -> no pude hacer la saturaciòn porque no produce ovf en valores "altos 0xffff"
 	str r5,[r1],#4
 	subs r2,1
 	bne .asm_productoEscalar32_loop
-@	pop {r5}
+	pop {r5}
 	bx lr @; devuelve el contexto de ejecución
-@
+
+
+@ ro = vector_in, r1:vector_out ; r2 = longitud , r3 = escalar ;
+.thumb_func
+	asm_productoEscalar16:
+	push {r4}
+	push {r5}
+	mov r5,0xffff       @
+	.asm_productoEscalar16_loop:
+	ldrh r4,[r0],#2 	@r4 almacena los valores del array
+	mul r4,r3			@ -> no pude hacer la saturaciòn porque no produce ovf en valores "altos 0xffff"
+	subs r5,r4
+	bpl .nosatura_16
+	mov r4,r5
+	@mov r4,#0x0ffff
+	.nosatura_16:
+	strh r4,[r1],#2
+	subs r2,1
+	bne .asm_productoEscalar16_loop
+	pop {r5}
+	pop {r4}
+	bx lr
+
+
 
 
 

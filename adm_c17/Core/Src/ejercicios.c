@@ -21,11 +21,12 @@ void productoEscalar32(uint32_t * vectorIn, uint32_t * vectorOut,uint32_t longit
 
 
 void productoEscalar16(uint16_t * vectorIn, uint16_t * vectorOut,uint32_t longitud, uint16_t escalar){
-	int64_t index ;
-	uint32_t result_op ;
-	for (index = longitud-1 ; index>=0 ; index--){
+	int64_t index =  0 ;
+	uint16_t length =(uint16_t) longitud-1  ;
+	uint16_t result_op ;
+	for (index = 0 ; index<length  ; index++){
 		result_op =vectorIn[index]*escalar ;
-		vectorOut[index] = (result_op < vectorIn[index]||result_op<escalar )?UINT16_MAX:(uint16_t)result_op ;
+		vectorOut[index] = (result_op < vectorIn[index]||result_op< escalar )?UINT16_MAX:(uint16_t)result_op ;
 	}
 }
 

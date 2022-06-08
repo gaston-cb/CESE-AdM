@@ -135,6 +135,19 @@ static void PrivilegiosSVC (void)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
+	 uint32_t escalar_test = 45 ;
+
+	  /// vectores de entrada para los test !
+	  uint32_t vector_test_asm_32   [3] = {0xFFFFFFFFul,20,21} ;
+	  uint16_t vector_test_asm_16[3] = {15,20,21} ;
+	  uint32_t vector_test_code_c_32[3] = {15,20,21} ;
+	  uint16_t vector_test_code_c_16[3] = {15,20,21} ;
+	  /// vectores de salida de los test
+	  uint32_t vector_out_testC_code_32[3] ;
+	  uint16_t vector_out_testC_code_16[3] ;
+
+	  uint32_t vector_out_test_asm_32[3] ;
+	  uint16_t vector_out_test_asm_16[3] ;
 
   /* USER CODE END 1 */
 
@@ -161,12 +174,7 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
   PrivilegiosSVC ();
-  uint32_t escalar_test = 45 ;
-  uint32_t vector_test_asm[3] = {0xFFFFFFFFul,20,21} ;
 
-  uint32_t vector_test_code_c[3] = {15,20,21} ;
-  uint32_t vector_out_test_code_c[3] ;
-  uint32_t vector_out_test_asm[3] ;
   //zeros(vector_test_code_c,3 ) ;
   //asm_zeros(vector_test_asm, 3) ;
 
@@ -174,9 +182,13 @@ int main(void)
 
    const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
-   productoEscalar32(vector_test_code_c, vector_out_test_code_c, 3, escalar_test) ;
-   asm_productoEscalar32(vector_test_asm, vector_out_test_asm, 3, escalar_test) ;
-  /* Infinite loop */
+   productoEscalar32(vector_test_code_c_32, vector_out_testC_code_32, 3, escalar_test) ;
+   /* productoEscalar16(vector_test_code_c_16, vector_out_testC_code_16, 3, escalar_test) ;
+
+   asm_productoEscalar32(vector_test_asm_32, vector_out_test_asm_32, 3, escalar_test) ;
+   asm_productoEscalar16(vector_test_asm_16, vector_out_test_asm_16, 3, escalar_test) ;
+*/
+   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
