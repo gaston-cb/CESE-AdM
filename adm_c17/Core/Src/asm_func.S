@@ -59,12 +59,18 @@
 .thumb_func
 	asm_productoEscalar32:
 	push {r5}
+	push {r6}
+	mov r6,0xFFFFFFFF
 	.asm_productoEscalar32_loop:
 	ldr r5,[r0],#4 	@r5 -> contenido apuntado por ro en r5, y luego r0 = r0+4
-	mul r5,r3		@ -> no pude hacer la saturaciòn porque no produce ovf en valores "altos 0xffff"
+	muls r5,r3		@ -> no pude hacer la saturaciòn porque no produce ovf en valores "altos 0xffff"
+	cmp r5,r6		@ r5 < r6
+	IT CS
+	movcs r5,r6		@ -> saturaciòn a 32bits, arm no pude generar ovf¿?
 	str r5,[r1],#4
 	subs r2,1
 	bne .asm_productoEscalar32_loop
+	pop {r6}
 	pop {r5}
 	bx lr @; devuelve el contexto de ejecución
 

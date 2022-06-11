@@ -125,9 +125,6 @@ static void PrivilegiosSVC (void)
 }
 /* USER CODE END 0 */
 
-
-
-
 /**
   * @brief  The application entry point.
   * @retval int
@@ -138,16 +135,15 @@ int main(void)
 	 uint32_t escalar_test = 45 ;
 
 	  /// vectores de entrada para los test !
-	  uint32_t vector_test_asm_32   [3] = {0xFFFFFFFFul,20,21} ;
-	  uint16_t vector_test_asm_16[3] = {15,20,21} ;
-	  uint32_t vector_test_code_c_32[3] = {15,20,21} ;
-	  uint16_t vector_test_code_c_16[3] = {15,20,21} ;
-	  /// vectores de salida de los test
-	  uint32_t vector_out_testC_code_32[3] ;
-	  uint16_t vector_out_testC_code_16[3] ;
-
-	  uint32_t vector_out_test_asm_32[3] ;
-	  uint16_t vector_out_test_asm_16[3] ;
+	 uint32_t vector_test_asm_32   [3] = {0xFFFFFFFFul,20,21} ;
+	 uint16_t vector_test_asm_16[3] = {15,20,21} ;
+	 uint32_t vector_test_code_c_32[3] = {15,20,21} ;
+	 uint16_t vector_test_code_c_16[3] = {15,20,21} ;
+	 /// vectores de salida de los test
+	 uint32_t vector_out_testC_code_32[3] ;
+	 uint16_t vector_out_testC_code_16[3] ;
+     uint32_t vector_out_test_asm_32[3] ;
+	 uint16_t vector_out_test_asm_16[3] ;
 
   /* USER CODE END 1 */
 
@@ -175,20 +171,15 @@ int main(void)
   /* USER CODE BEGIN 2 */
   PrivilegiosSVC ();
 
-  //zeros(vector_test_code_c,3 ) ;
-  //asm_zeros(vector_test_asm, 3) ;
+  zeros(vector_test_code_c,3 ) ;
+  asm_zeros(vector_test_asm, 3) ;
 
 
 
    const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
-   productoEscalar32(vector_test_code_c_32, vector_out_testC_code_32, 3, escalar_test) ;
-   /* productoEscalar16(vector_test_code_c_16, vector_out_testC_code_16, 3, escalar_test) ;
 
-   asm_productoEscalar32(vector_test_asm_32, vector_out_test_asm_32, 3, escalar_test) ;
-   asm_productoEscalar16(vector_test_asm_16, vector_out_test_asm_16, 3, escalar_test) ;
-*/
-   /* Infinite loop */
+  /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
@@ -211,7 +202,7 @@ void SystemClock_Config(void)
   /** Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
-  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE3);
 
   /** Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
@@ -220,10 +211,10 @@ void SystemClock_Config(void)
   RCC_OscInitStruct.HSEState = RCC_HSE_BYPASS;
   RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
   RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSE;
-  RCC_OscInitStruct.PLL.PLLM = 4;
-  RCC_OscInitStruct.PLL.PLLN = 168;
+  RCC_OscInitStruct.PLL.PLLM = 15;
+  RCC_OscInitStruct.PLL.PLLN = 144;
   RCC_OscInitStruct.PLL.PLLP = RCC_PLLP_DIV2;
-  RCC_OscInitStruct.PLL.PLLQ = 7;
+  RCC_OscInitStruct.PLL.PLLQ = 5;
   if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
   {
     Error_Handler();
@@ -238,7 +229,7 @@ void SystemClock_Config(void)
   RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV4;
   RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV2;
 
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_5) != HAL_OK)
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_3) != HAL_OK)
   {
     Error_Handler();
   }
