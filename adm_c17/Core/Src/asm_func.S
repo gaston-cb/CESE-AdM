@@ -93,6 +93,20 @@
 	pop {r4}
 	bx lr
 
+@ ro = vector_in, r1:vector_out ; r2 = longitud , r3 = escalar ;
+.thumb_func
+	asm_productoEscalar12:
+	push {r4-r5}
+	mov r5,0x0FFF
+	.asm_productoEscalar12_loop:
+	ldrh r4,[r0],#2
+	muls r4,r3
+	IT CS
+	mov r4,r5
+	subs r2,1
+	bne .asm_productoEscalar12_loop:
+	pop{r4-r5}
+	bx lr
 
 
 
