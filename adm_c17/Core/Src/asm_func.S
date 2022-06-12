@@ -54,7 +54,6 @@
         bne .asm_zeros_loop
         bx lr
 
-
 @ ro = vector_in, r1:vector_out ; r2 = longitud , r3 = escalar ;
 .thumb_func
 	asm_productoEscalar32:
@@ -83,14 +82,12 @@
 	mov r5,0xffff       @
 	.asm_productoEscalar16_loop:
 	ldrh r4,[r0],#2 	@r4 almacena los valores del array
-	mul r4,r3			@ -> no pude hacer la saturaciòn porque no produce ovf en valores "altos 0xffff"
-	subs r5,r4
-	bpl .nosatura_16
-	mov r4,r5
-	@mov r4,#0x0ffff
-	.nosatura_16:
-	strh r4,[r1],#2
-	subs r2,1
+	muls r4,r3
+	cmp r4,r5		@
+	IT CS
+	movcs r4,r5		@ -> saturaciòn a 16bits, arm no pude generar ovf, siempre trabaja con signed int32??
+	str r4,[r1],#2
+	subs r2,1		    		@ -> saturaciòn a 32 bits
 	bne .asm_productoEscalar16_loop
 	pop {r5}
 	pop {r4}
