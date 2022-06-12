@@ -51,3 +51,36 @@ void zeros (uint32_t *vector,uint32_t longitud){
 }
 
 
+void pack32to16 (int32_t * vectorIn, int16_t *vectorOut, uint32_t longitud){
+	// me quedo con los 16 bits mas significativos
+	int16_t index = 0   ;
+    int32_t shifter = 16;
+    int32_t aux_value ;
+    int16_t output_value[longitud] ;
+
+    for(index = 0 ; index<longitud; index++){
+    //	vectorOut[index] = (vectorIn[index]>>16);
+     	aux_value =(vectorIn[index]  >> 16) ;
+     	output_value[index] =(int16_t) aux_value; //aux_value = aux_value >> 16 ;
+     	vectorOut[index] =  output_value[index] ;
+    }
+  //  memcpy(vectorOut[0],output_value[0],2 ) ; //destino, fuente, num_bytes
+
+}
+
+
+
+int32_t max (int32_t * vectorIn, uint32_t longitud){
+	uint32_t index_max = 0 ;
+	int32_t max = vectorIn[index_max] ;
+	uint32_t index = 0 ;
+	for (index = 1 ; index<longitud; index++){
+		if (vectorIn[index]>max){
+			max = vectorIn[index] ;
+			index_max = index ;
+		}
+	}
+	return index_max ;
+}
+
+

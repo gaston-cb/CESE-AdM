@@ -8,6 +8,8 @@
 .global asm_zeros
 .global asm_productoEscalar32
 .global asm_productoEscalar16
+.global asm_productoEscalar12
+
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
 @   void asm_svc (void)
@@ -102,10 +104,10 @@
 	ldrh r4,[r0],#2
 	muls r4,r3
 	IT CS
-	mov r4,r5
+	movcs r4,r5
 	subs r2,1
-	bne .asm_productoEscalar12_loop:
-	pop{r4-r5}
+	bne .asm_productoEscalar12_loop
+	pop {r4-r5}
 	bx lr
 
 

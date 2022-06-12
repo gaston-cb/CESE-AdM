@@ -132,18 +132,28 @@ static void PrivilegiosSVC (void)
 int main(void)
 {
   /* USER CODE BEGIN 1 */
-	 uint32_t escalar_test = 45 ;
+	  /* USER CODE BEGIN 1 */
+	   uint32_t escalar_test = 45 ;
+	   /// vectores de entrada para los test !
+	   // para uso con memcpy  en algunos casos puntuales !
+	   uint32_t vector_relleno_32[3] = {20 ,21,22} ;
+	   uint16_t vector_relleno_16[3] = {20,21,22} ;
 
-	  /// vectores de entrada para los test !
-	 uint32_t vector_test_asm_32   [3] = {0xFFFFFFFFul,20,21} ;
-	 uint16_t vector_test_asm_16[3] = {15,20,21} ;
-	 uint32_t vector_test_code_c_32[3] = {15,20,21} ;
-	 uint16_t vector_test_code_c_16[3] = {15,20,21} ;
-	 /// vectores de salida de los test
-	 uint32_t vector_out_testC_code_32[3] ;
-	 uint16_t vector_out_testC_code_16[3] ;
-     uint32_t vector_out_test_asm_32[3] ;
-	 uint16_t vector_out_test_asm_16[3] ;
+	   uint32_t vector_in_test_c_32  [3] ={0xFFFFFFFF,21,22 } ;
+	   uint32_t vector_out_test_c_32 [3] ;
+	   uint32_t vector_in_test_asm_32  [3] ={0xFFFFFFFF,21,22 } ;
+	   uint32_t vector_out_test_asm_32 [3] ;
+
+	   uint16_t vector_in_test_c_16 [3] = {0xFFFF ,21,33} ;
+	   uint16_t vector_out_test_c_16 [3] ;
+	   uint16_t vector_in_test_asm_16 [3] = {0xFFFF,21,33} ;
+	   uint16_t vector_out_test_asm_16[3]  ;
+
+	   int32_t pack32_16[3] = {-5, 65600,4122 } ;
+	   int16_t pack16[3] ,pack16_asm[3];
+	   int32_t vector_max [10] = {1,2,3,45,32,44,33,22,22,11 } ;
+	   uint32_t ind_max ;
+	   /* USER CODE END 1 */
 
   /* USER CODE END 1 */
 
@@ -170,13 +180,39 @@ int main(void)
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
   PrivilegiosSVC ();
+  // ejercicio 1
+  asm_zeros(vector_out_test_asm_32, 3) ;
+  zeros(vector_out_test_c_32, 3) ;
+  // fin ejercicio 1
+  /// ejercicio 2
+  asm_productoEscalar32(vector_in_test_asm_32, vector_out_test_asm_32, 3, escalar_test) ;
+  productoEscalar32(vector_in_test_c_32, vector_out_test_c_32, 3, escalar_test) ;
+  /// fin ejercicio 2
+  /// ejercicio 3
+  productoEscalar16(vector_in_test_c_16, vector_out_test_c_16, 3, escalar_test) ;
+  asm_productoEscalar16(vector_in_test_asm_16,vector_out_test_asm_16, 3,escalar_test ) ;
+  /// fin ejercicio 3
+  /// ejercicio 4
+  productoEscalar12(vector_in_test_c_16, vector_out_test_c_16, 3, escalar_test) ;
+  asm_productoEscalar12(vector_in_test_c_16, vector_out_test_c_16, 3, escalar_test) ;
 
-  zeros(vector_test_code_c,3 ) ;
-  asm_zeros(vector_test_asm, 3) ;
+  /// fin ejercicio 4
+  /// ejercicio 5
+  ///
+  ///
+
+  /// fin ejercicio 5
+  /// ejercicio 6
+  pack32to16 (pack32_16, pack16, 3);
+  asm_pack32to16 (pack32_16, pack16_asm, 3);
+
+  ///fin ejercicio 6
+  /// ejercicio 7
+  ind_max = max(vector_max,10) ;
+
+  /// fin ejercicio 7
 
 
-
-   const uint32_t Resultado = asm_sum (5, 3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
