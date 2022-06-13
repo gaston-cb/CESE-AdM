@@ -208,7 +208,8 @@ int main(void)
 
   ///fin ejercicio 6
   /// ejercicio 7
-  ind_max = max(vector_max,10) ;
+  ind_max     = max(vector_max,10) ;
+  ind_max_asm = asm_max(vector_max,10)  ;
 
   /// fin ejercicio 7
 

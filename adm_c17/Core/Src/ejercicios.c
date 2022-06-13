@@ -84,3 +84,22 @@ int32_t max (int32_t * vectorIn, uint32_t longitud){
 }
 
 
+void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud,uint32_t N){
+	uint32_t index = 0 ;
+	// no testeada
+	if (N== 0void || longitud<N){
+		memcpy(vectorOut,vectorIn,sizeof(int32_t)*longitud) ; // if n = 0 -> return vectorIn
+		return ;
+	}
+	int32_t count = 0 ;
+	//index = k*N -> INDEX/n = K
+	for (index = 0 ; index<longitud; index++){
+		if (index%N == 0){
+			vectorOut[count] = vectorIn[index] ;
+			count++ ;
+		}
+	}
+}
+
+
+

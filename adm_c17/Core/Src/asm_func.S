@@ -9,6 +9,7 @@
 .global asm_productoEscalar32
 .global asm_productoEscalar16
 .global asm_productoEscalar12
+.global asm_max
 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
@@ -111,5 +112,29 @@
 	bx lr
 
 
-
+@r0 -> int32, r1 -> cant de elementos(uint32_t)
+.thumb_func
+	asm_max:
+	push {r4}
+	push {r5}
+	push {r6}
+	ldr r4,[r0],#4
+	subs r1,1
+	IT EQ		@ POR SI EL VECTOR ES DE UN SOLO ELEMENTO
+	beq .end_asm_max
+	.asm_max_loop:
+		ldr r5,[r0]
+		cmp r5,r4
+		ITT HI 		@no soporta dos movhi, por eso se opta por usar bhi
+		movhi r4,r5
+		movhi r6,r1
+		add r0,#4
+		subs r1,1
+		bne .asm_max_loop
+	.end_asm_max:
+	mov r0,r6
+	pop {r6}
+	pop {r5}
+	pop {r4}
+	bx lr
 
