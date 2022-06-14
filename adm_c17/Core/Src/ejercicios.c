@@ -131,3 +131,25 @@ void invertir(uint16_t *vector, uint32_t longitud_vector){
 		vector[longitud_vector-1-count] = aux ;
 		count++ ;
 	}
+}
+
+
+void filtroVentana10(uint16_t * vectorIn, uint16_t * vectorOut, uint32_t longitudVectorIn){
+	uint32_t size_windows = 10 ;
+	uint32_t index = 0 ;
+	uint32_t ind = 0 ;
+	uint32_t avg_data = 0 ;
+	uint32_t temporal_data = 0 ;
+	for (index = 0 ; index<longitudVectorIn;index++){
+		avg_data = 0 ;
+		temporal_data = 0 ;
+		for (ind = 0;ind<size_windows;ind++){  // 0<ind%vectIn <vectIn-1
+			//temporal_data += vectorIn[index + ind%longitudVectorIn] ;
+			temporal_data +=vectorIn[(index + ind%longitudVectorIn)%longitudVectorIn] ;
+		}
+
+		vectorOut[index] = temporal_data ;
+
+	}
+
+}
