@@ -11,7 +11,9 @@
 .global asm_productoEscalar12
 .global asm_max
 .global asm_corr
-.global asm_invertir 
+.global asm_invertir
+.global	asm_filtroVentana10
+ 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
 @   void asm_svc (void)
@@ -233,4 +235,47 @@
 	pop {r4}
 	pop {r3}
 	pop {r2}
+	bx lr
+
+@r0 -> vector In,
+@r1 -> vector Out,
+@r2 -> cantidad de elementos
+.thumb_func
+	asm_filtroVentana10:
+	push {r3} @contador indice para el vector in
+	push {r4} @contador indice para la ventana
+	push {r5} @acumulador para avg
+	push {r6} @ windows % longitud
+	push {r7} @ uso para (index + ventana % L)%L
+	push {r8} @ uso para almacenar los datos de ldrh
+	mov r5,0
+	mov r8,0
+	mov r3,0
+	mov r4,0
+	.asm_filtroVentana10_loop:
+		@              VENTANA % LONGITUD
+		udiv r6,r4,r2   	@ r6 = r4/r2
+		mls r6,r2,r6 ,r4	@ r6 = r6 %r2
+		@ index + ventana %longitud (R7 = R3 + R6)
+		add r7,r6,r3
+		@ (index + ventana %longitud)%longitud
+		udiv r6,r7,r2 @ r7 = r4/r2 (ventana/ longitud)
+		mls r7,r2,r6 ,r7	@ r6 = r6 %r2
+		add r4,r4,1	 @for ventana=1 hasta 10 !
+		ldrh r8,[r0,r7,LSL 1]
+		add r5,r5,r8
+		cmp r4,#10
+	bne .asm_filtroVentana10_loop
+		strh r5,[r1],#2
+		mov r4,0
+		mov r5,0
+		add r3,r3,1
+		cmp r3,r2
+	bne .asm_filtroVentana10_loop
+	pop {r8}
+	pop {r7}
+	pop {r6}
+	pop {r5}
+	pop {r4}
+	pop {r3}
 	bx lr
