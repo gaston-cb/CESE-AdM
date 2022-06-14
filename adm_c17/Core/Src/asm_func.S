@@ -10,7 +10,7 @@
 .global asm_productoEscalar16
 .global asm_productoEscalar12
 .global asm_max
-
+.global asm_corr
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
 @   void asm_svc (void)
@@ -137,4 +137,71 @@
 	pop {r5}
 	pop {r4}
 	bx lr
+
+
+
+@ r0 -> vectorX, r1, vectorY, r2->vectorCorr, r3, numero de elementos
+@ se asume que se tiene la misma cantidad de elementos
+@ no se contempla el caso de cantX != cantY ni el caso de un elemento,
+@ se asume que la cantidad de elementos es mayor a dos.
+.thumb_func
+	asm_corr:
+	push {r4}  @vector de x[n]
+	push {r5}  @vector de y[n]
+	push {r6}  @contador de L
+	push {r7}  @acumulador
+	push {r8}  @offset de x
+	push {r9}  @offset de y
+	push {r10} @contador de N (sumatoria)
+	sub r3,1   @ llevo a N-1 la cantidad de vectores de salida
+	mov r6,#0  @ contador de cantidad de datos de salida (L, de 0 a N-1 o R3 actual)
+	mov r7,#0  @ acumulador de convolución
+	mov r10,#0
+	.asm_corr_loop:
+	@ offset de x
+	ldrh r4,[r0,r8]
+@ rutina para y(n-l)
+	cmp r6,r10 @l>n -> INSTRUCCIONES CON LS !
+	ITTTE LS @ cuatro instrucciones !
+	subls r9,r10,r6 @ (n-l>0)
+	lslls r9,1 		@ multiplicar x2 para el offset
+	ldrhls r5,[r1,r9]
+	movhi r5,0
+@ RUTINA DE MULTIPLICACION Y ACUMULACION
+	MLA   R7,R4,R5,r7 @r4*r5 + resultado anterior
+@ RUTINA DE COMPARACION PARA SALTAR
+	cmp r10,r3
+	ITTEE EQ
+	moveq r10,0
+	moveq r8,0
+	addne r10,1
+	addne r8,2
+
+	cmp r10,#0
+	bne .asm_corr_loop
+@ equivale al segundo for !
+	strh r7, [r2],#2 @guardar corr
+	mov r7,0 	@volver acumulador a cero
+	add r6,1
+	cmp r6,r3
+	IT LS @ reseteo el contador antes de iniciar
+	bLS .asm_corr_loop
+	@strh r7, [r2,2]
+	pop  {r10}
+	pop  {r9}
+	pop  {r8}
+	pop  {r7}
+	pop  {r6}
+	pop  {r5}
+	pop  {r4}
+	bx lr
+
+
+@ stand by !
+@ r0 debe incrementarse en 2, r1 incrementarse en uno
+@	.asm_corr: @ aca vuelvo a empezar
+@	ldm r0,{r4} @ cargo x[i] parte L y x[i+1] en la parte alta
+@	ldm r1,{r5} @ cargo y[i] parte L y y[i+1] en la parte alta
+@	smuad r5, r4,r5
+
 

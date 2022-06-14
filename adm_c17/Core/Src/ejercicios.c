@@ -102,4 +102,24 @@ void downsampleM (int32_t * vectorIn, int32_t * vectorOut, uint32_t longitud,uin
 }
 
 
+void corr (int16_t *vectorX, int16_t * vectorY, int16_t *vectorCorr, uint32_t longitud){
+	/// sum(l) : L = N
+	uint16_t index_corr = 0 ;
+	uint16_t acum = 0 ;
+	uint16_t index_vector_input = 0 ;
+	uint16_t aux_calc ;
+	for (index_corr = 0 ; index_corr<longitud ; index_corr++){
+		for (index_vector_input = 0;index_vector_input<longitud;index_vector_input++ ){
+			aux_calc = (index_vector_input-index_corr)<0 ?0 \
+												:vectorX[index_vector_input]*vectorY[(index_vector_input-index_corr)] ;
+			acum = acum +aux_calc ;
+		}
+		vectorCorr[index_corr] = acum  ;
+		acum = 0 ;
+		aux_calc = 0 ;
+	}
+
+
+}
+
 
