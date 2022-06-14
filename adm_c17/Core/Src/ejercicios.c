@@ -122,4 +122,12 @@ void corr (int16_t *vectorX, int16_t * vectorY, int16_t *vectorCorr, uint32_t lo
 
 }
 
-
+void invertir(uint16_t *vector, uint32_t longitud_vector){
+	uint32_t count = 0 ;
+	uint16_t aux = 0 ;
+	while (count<longitud_vector/2){
+		aux = vector[count] ;
+		vector[count] = vector[longitud_vector-1-count] ;
+		vector[longitud_vector-1-count] = aux ;
+		count++ ;
+	}
