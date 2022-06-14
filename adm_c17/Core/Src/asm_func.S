@@ -11,6 +11,7 @@
 .global asm_productoEscalar12
 .global asm_max
 .global asm_corr
+.global asm_invertir 
 @@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@@
 @ Prototipo en "C":
 @   void asm_svc (void)
@@ -197,7 +198,7 @@
 	bx lr
 
 
-@ stand by !
+@ stand by ! -> consultar 
 @ r0 debe incrementarse en 2, r1 incrementarse en uno
 @	.asm_corr: @ aca vuelvo a empezar
 @	ldm r0,{r4} @ cargo x[i] parte L y x[i+1] en la parte alta
@@ -205,3 +206,31 @@
 @	smuad r5, r4,r5
 
 
+@ r0 -> vector de entrada (puntero uint16_t)
+@ r1 -> size de vector de entrada (cant de elementos)
+.thumb_func:
+	asm_invertir:
+	push {r2} @ N/2
+	push {r3} @ registro auxiliar
+	push {r4} @ registro contador
+	push {r5} @ cargo long - 1 - contador
+	push {r6} @ vector [long - 1 - contador]
+
+	mov r4,#0
+	asr r2,r1,#1 @ N/2
+    .asm_invertir_loop:
+		sub r5,r1,1   @ long - 1
+		sub r5,r5,r4  @ long - 1 - contador
+		ldrh r3,[r0,r4,LSL 1]   @cargo vector[count]
+		ldrh r6,[r0,r5,LSL 1] @ R6 = *(RO + R5 * 2)
+		strh r3,[r0,r5,LSL 1] @ guardo r3 en *(RO + R5 * 2)
+		strh r6,[r0,r4,LSL 1]
+		add r4,1
+		cmp r4,r2
+	bne .asm_invertir_loop
+	pop {r6}
+	pop {r5}
+	pop {r4}
+	pop {r3}
+	pop {r2}
+	bx lr
